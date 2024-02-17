@@ -12,7 +12,7 @@ class OrdersController < ApplicationController
   def create
     binding.irb
     ActiveRecord::Base.transaction do
-      @order = current_user.orders.lock.build(order_params)
+      @order = current_user.orders.build(order_params)
       unless @order.save
         raise ActiveRecord::Rollback
       end

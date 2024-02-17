@@ -10,13 +10,14 @@ class OrdersController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
+    # ActiveRecord::Base.transaction do
       @order = current_user.orders.build(order_params)
+      @order.with_lock do
       unless @order.save
         raise ActiveRecord::Rollback
       end
-      binding.irb
-      @order.lock!
+      # # binding.irb
+      # @order.lock!
       @order.update_total_quantity
       # update_total_quantityメソッドは、注文された発注量を総量に反映するメソッドであり、Orderモデルに定義されています。
     end

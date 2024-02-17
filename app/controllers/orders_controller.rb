@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    # ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction do
       @order = current_user.orders.build(order_params)
       unless @order.save
         raise ActiveRecord::Rollback
